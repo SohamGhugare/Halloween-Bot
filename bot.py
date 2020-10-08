@@ -64,4 +64,4 @@ async def help(ctx):
 client = Thread(target=client_thread, daemon=True)
 client.run()
 
-bot.run(tokens.TOKEN)
+Thread(target=bot.run, args=(tokens.TOKEN,)).run()

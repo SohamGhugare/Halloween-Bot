@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import datetime
 import asyncio
-import os
+import subprocess as sb
 from dotenv import load_dotenv
 import tokens
 from threading import Thread
@@ -15,7 +15,7 @@ emoji = ['🎃', '👻', '🌟', '✨']
 # https://discord.com/api/oauth2/authorize?client_id=763634248115945483&permissions=2080898160&scope=bot
 
 def client_thread():
-    os.system("python client.py")
+    sb.run("python client.py")
 
 bot = commands.Bot(command_prefix = "-")
 
@@ -61,7 +61,7 @@ async def help(ctx):
     embed.set_footer(icon_url = ctx.author.avatar_url, text=f"Requested by {ctx.author.name}")
     await ctx.send(embed = embed)
 
-client = Thread(target=client_thread, daemon=True)
-client.run()
+client = Thread(target=client_thread)
+client.start()
 
-Thread(target=bot.run, args=(tokens.TOKEN,)).run()
+Thread(target=bot.run, args=(tokens.TOKEN,)).start()

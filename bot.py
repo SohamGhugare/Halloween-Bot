@@ -4,6 +4,7 @@ import datetime
 import asyncio
 import os
 from dotenv import load_dotenv
+import tokens
 
 load_dotenv()
 
@@ -31,6 +32,17 @@ async def halloween(ctx):
     await ctx.send(embed = embed)
 
 
+# Possess command
+
+@client.command(aliases=['Possess', 'p'])
+async def possess(ctx):
+    await ctx.send(f'{ctx.author.mention} You are being possessed..... {emoji[1]}')
+    await asyncio.sleep(2)
+    await ctx.send(f'Converting to ghost..... {emoji[1]}')
+    await asyncio.sleep(2)
+    await ctx.send(f'You are now possessed, Welcome to the Spooked family!{emoji[1]}')
+    
+
 # Help command
 
 client.remove_command('help')
@@ -46,4 +58,4 @@ async def help(ctx):
 
 
 
-client.run(os.getenv('BOT_TOKEN'))
+client.run(tokens.TOKEN)

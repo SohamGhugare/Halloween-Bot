@@ -6,6 +6,10 @@ from discord import Client
 client = Client()
 
 @client.event
+async def on_ready():
+    print("Client is ready")
+
+@client.event
 async def on_message(message: discord.Message):
     if message.content.lower().contains("happy halloween"):
         embed = Embed(title="Happy Halloween", description=message.author.mention, color=0x222222)

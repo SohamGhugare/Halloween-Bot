@@ -41,7 +41,7 @@ async def possess(ctx):
     await ctx.send(f'Converting to ghost..... {emoji[1]}')
     await asyncio.sleep(2)
     await ctx.send(f'You are now possessed, Welcome to the Spooked family!{emoji[1]}')
-    
+
 
 # Help command
 
@@ -52,6 +52,7 @@ async def help(ctx):
     embed = discord.Embed(title='Commands:', color=discord.Color.green())
 
     embed.add_field(name='-halloween', value='Shows days remaining for Halloween')
+    embed.add_field(name='-possess', value='Converts you into Spooked Family')
 
     embed.set_footer(icon_url = ctx.author.avatar_url, text=f"Requested by {ctx.author.name}")
     await ctx.send(embed = embed)

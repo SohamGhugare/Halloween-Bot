@@ -11,3 +11,5 @@ async def on_message(message: discord.Message):
         embed = Embed(title="Happy Halloween", description=message.author.mention, color=0x222222)
         embed.set_thumbnail(url="https://cdn.pixabay.com/photo/2017/10/26/20/00/pumpkin-2892303_960_720.jpg")
         await message.channel.send(embed=embed)
+
+client.run(tokens.TOKEN)

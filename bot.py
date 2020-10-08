@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-emoji = [':jack_o_lantern:', ':ghost:', ':star2:']
+emoji = ['🎃', '👻', '🌟', '✨']
 
 # Bot invite link :
 # https://discord.com/api/oauth2/authorize?client_id=763634248115945483&permissions=2080898160&scope=bot

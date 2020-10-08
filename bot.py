@@ -64,4 +64,4 @@ async def help(ctx):
 client = Thread(target=client_thread)
 client.start()
 
-Thread(target=bot.run, args=(tokens.TOKEN,)).start()
+bot.run(tokens.TOKEN)

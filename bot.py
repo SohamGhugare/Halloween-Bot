@@ -2,6 +2,10 @@ import discord
 from discord.ext import commands
 import datetime
 import asyncio
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 emoji = [':jack_o_lantern:', ':ghost:', ':star2:']
 
@@ -34,7 +38,7 @@ client.remove_command('help')
 @client.command(aliases=['Help'])
 async def help(ctx):
     embed = discord.Embed(title='Commands:', color=discord.Color.green())
-    
+
     embed.add_field(name='-halloween', value='Shows days remaining for Halloween')
 
     embed.set_footer(icon_url = ctx.author.avatar_url, text=f"Requested by {ctx.author.name}")
@@ -42,4 +46,4 @@ async def help(ctx):
 
 
 
-client.run("NzYzNjM0MjQ4MTE1OTQ1NDgz.X36j0A.Dg9HiVvHqoyoaXnedmafct1I6f8")
+client.run(os.getenv('BOT_TOKEN'))

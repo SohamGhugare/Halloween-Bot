@@ -54,22 +54,17 @@ async def possess(ctx):
 async def event(ctx, cmd):
     if cmd.lower() == "host":
         embed = discord.Embed(title='EVENT !!', color=discord.Color.green())
-        embed.add_field(name=f'A new event has been hosted by {ctx.author.name} !', value = 'React to this message within 2 mins to enter in the event !')
-        msg = await ctx.send(embed = embed)
-
+        embed.add_field(name=f'A new event has been hosted by {ctx.author.name} !', value = 'React to this message within 10 secs to enter in the event !')
+        msg: discord.Message = await ctx.send(embed = embed)
         await msg.add_reaction('🎉')
-
+        await asyncio.sleep(10) #Change as per required
         new_msg = await ctx.channel.fetch_message(msg.id)
 
         members = await new_msg.reactions[0].users().flatten()
         members.pop(members.index(bot.user))
-
-        await asyncio.sleep(10) #Change as per required
-
-        membed = discord.Embed(title='Members Enrolled: ', color=discord.Color.red())
+        await new_msg.delete()
+        membed = discord.Embed(title='Members Enrolled: ', description="\n".join(x.mention for x in members), color=discord.Color.red())
         await ctx.send(embed = membed)
-
-        await ctx.send(members)
 
  
 

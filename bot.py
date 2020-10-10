@@ -47,16 +47,45 @@ async def possess(ctx):
     await ctx.send(f'You are now possessed, Welcome to the Spooked family!{emoji[1]}')
 
 
+# ------ EVENT COMMAND ----------
+
+@bot.command(aliases=['Event'])
+@commands.has_role('Event Host')
+async def event(ctx, cmd):
+    if cmd.lower() == "host":
+        embed = discord.Embed(title='EVENT !!', color=discord.Color.green())
+        embed.add_field(name=f'A new event has been hosted by {ctx.author.name} !', value = 'React to this message within 2 mins to enter in the event !')
+        msg = await ctx.send(embed = embed)
+
+        await msg.add_reaction('🎉')
+
+        new_msg = await ctx.channel.fetch_message(msg.id)
+
+        members = await new_msg.reactions[0].users().flatten()
+        members.pop(members.index(bot.user))
+
+        await asyncio.sleep(10) #Change as per required
+
+        membed = discord.Embed(title='Members Enrolled: ', color=discord.Color.red())
+        await ctx.send(embed = membed)
+
+        await ctx.send(members)
+
+ 
+
+
 # Help command
 
 bot.remove_command('help')
 
 @bot.command(aliases=['Help'])
 async def help(ctx):
+
     embed = discord.Embed(title='Commands:', color=discord.Color.green())
 
     embed.add_field(name='-halloween', value='Shows days remaining for Halloween')
     embed.add_field(name='-possess', value='Converts you into Spooked Family')
+    embed.add_field(name='-event host', value='Hosts an event (Needs "Event Host" role')
 
     embed.set_footer(icon_url = ctx.author.avatar_url, text=f"Requested by {ctx.author.name}")
     await ctx.send(embed = embed)

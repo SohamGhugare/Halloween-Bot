@@ -1,3 +1,4 @@
+from os import name
 import discord
 from discord.ext import commands
 import datetime
@@ -40,11 +41,15 @@ async def halloween(ctx):
 
 @bot.command(aliases=['Possess', 'p'])
 async def possess(ctx):
-    await ctx.send(f'{ctx.author.mention} You are being possessed..... {emoji[1]}')
-    await asyncio.sleep(2)
-    await ctx.send(f'Converting to ghost..... {emoji[1]}')
-    await asyncio.sleep(2)
-    await ctx.send(f'You are now possessed, Welcome to the Spooked family!{emoji[1]}')
+    async with ctx.typing():
+        await ctx.send(f'{ctx.author.mention} You are being possessed..... {emoji[1]}')
+        await asyncio.sleep(2)
+        await ctx.send(f'Converting to ghost..... {emoji[1]}')
+        await asyncio.sleep(2)
+        await ctx.send(f'You are now possessed, Welcome to the Spooked family!')
+        await ctx.send(emoji[1])
+        user: discord.Member = ctx.author
+        await user.edit(nick=(user.nick or user.name) + emoji[1])
 
 
 # ------ EVENT COMMAND ----------
@@ -58,13 +63,19 @@ async def event(ctx, cmd):
         msg: discord.Message = await ctx.send(embed = embed)
         await msg.add_reaction('🎉')
         await asyncio.sleep(10) #Change as per required
-        new_msg = await ctx.channel.fetch_message(msg.id)
+        new_msg: discord.Message = await ctx.channel.fetch_message(msg.id)
 
         members = await new_msg.reactions[0].users().flatten()
         members.pop(members.index(bot.user))
         await new_msg.delete()
         membed = discord.Embed(title='Members Enrolled: ', description="\n".join(x.mention for x in members), color=discord.Color.red())
         await ctx.send(embed = membed)
+        mem: discord.User
+        for mem in members:
+            chan: discord.DMChannel = mem.dm_channel or await mem.create_dm()
+            await chan.trigger_typing()
+            await chan.send("testing eh?")
+
 
  
 
@@ -75,7 +86,7 @@ bot.remove_command('help')
 
 @bot.command(aliases=['Help'])
 async def help(ctx):
-
+    await ctx.trigger_typing()
     embed = discord.Embed(title='Commands:', color=discord.Color.green())
 
     embed.add_field(name='-halloween', value='Shows days remaining for Halloween')
